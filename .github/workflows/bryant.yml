@@ -1,2 +1,15 @@
 name: Bryant job
-runs-on: ubuntu-latest
+on: 
+  pull_request:
+    types: [opened]
+permissions:
+  pull-requests: write
+jobs:
+  assure:
+    name: Post a message for testing 
+    runs-on: ubuntu-latest
+    steps:
+      - run: gh pr comment "$PR_URL" --body "This is your second workflow bruh!"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
